@@ -4,6 +4,7 @@ on:
 
 permissions:
     id-token: write
+    contents: write
 
 jobs:
   terraform-deploy:
@@ -22,5 +23,10 @@ jobs:
          run: terraform plan
        - name: Run Terraform Apply command
          run: terraform apply -auto-approve
+       - name: commit Terraform State File
+         uses: stefanzweifel/git-auto-commit-action@v4
+         with:
+           commit_message: Updating Terraform state file
+           file_pattern: terraform.tfstate
          
  
