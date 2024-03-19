@@ -8,10 +8,19 @@ permissions:
 jobs:
   terraform-deploy:
      runs-on: ubuntu-latest
-     steps: 
+     steps:
+       - name: Clone Source Code
+         uses: actions/checkout@v2
        - name: Configure AWS Credentials
          uses: aws-actions/configure-aws-credentials@v4
          with: 
            role-to-assume: arn:aws:iam::123456789100:role/my-github-actions-role
            aws-region: us-east-1
+       - name: Run Terraform Init command
+         run: terraform init
+       - name: Run Terraform Plan command
+         run: terraform plan
+       - name: Run Terraform Apply command
+         run: terraform apply -auto-approve
+         
  
